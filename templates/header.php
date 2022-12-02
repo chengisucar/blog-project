@@ -1,14 +1,19 @@
 <head>
-	<title>Ninja Pizza</title>
+	<title>Blog Project</title>
 	<!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <style type="text/css">
 	  .brand{
-	  	background: #cbb09c !important;
+	  	background: #56a1c7 !important;
 	  }
   	.brand-text{
-  		color: #cbb09c !important;
+  		color: #56a1c7 !important;
   	}
+    form .breadcrumb{
+      max-width: 460px;
+      margin: 20px auto;
+      padding: 20px;
+    }
   </style>
 </head>
 <body class="grey lighten-4">
@@ -16,7 +21,7 @@
     <div class="container">
       <a href="#" class="brand-logo brand-text">Blog Project</a>
       <ul id="nav-mobile" class="right hide-on-small-and-down">
-        <li><a href="#" class="btn brand z-depth-0">Add an Article</a></li>
+        <li><a href="add.php" class="btn brand z-depth-0">Add an Article</a></li>
       </ul>
     </div>
   </nav>
