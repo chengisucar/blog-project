@@ -2,19 +2,30 @@
 
 A basic web application using `php`, `mysql` and `docker-compose`
 
-Start application with 
+---
 
-    `docker-compose up -d`
-If no `vendor` folder will appear, go into `www` container using 
+Start application with: 
 
-    `docker exec -it containerName /bin/sh`
+    docker-compose up -d
 
-And run `composer install`
+`mysqli` and `mysql_pdo` install commands are in Dockerfile. They will be installed. 
+    
+When docker build is done go into the `server` container using:
 
-Version Notes:
+    docker exec -it containerName /bin/sh
 
-- `composer install` command on Dockerfile RUN didnt work. Because when `docker-compose` is run, Host directory volume is mounted on container thus vendor and composer.lock is overridden and `composer install` should be run again after composing. Therefore `composer install` is added as CMD. 
-- That didnt work as well since container automatically exits after running CMD command. 
-- CMD `composer install` command removed. Needs to be manually run
+And run: 
 
-- `phinx` and `phpunit` executables are in `vendor/bin`
+    composer install
+
+`Phinx` and `phpunit` will be installed. Initiate `phinx`. This will create `phinx.php`:
+
+    vendor/bin/phinx init
+
+Set correct data in `phinx.php` and create a migration file:
+
+    vendor/bin/phinx create MyNewMigration
+
+Fill it as in [phinx_docs](https://book.cakephp.org/phinx/0/en/migrations.html) and migrate:
+
+    vendor/bin/phinx migrate -e development
