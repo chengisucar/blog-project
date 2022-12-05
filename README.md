@@ -5,7 +5,8 @@ A basic web application using `php`, `mysql` and `docker-compose`
 Start application with 
 
     `docker-compose up -d`
-If no `vendor` folder will appear, go into `www` container using 
+    
+`vendor` folder will not appear, go into `server` container using 
 
     `docker exec -it containerName /bin/sh`
 
@@ -18,3 +19,7 @@ Version Notes:
 - CMD `composer install` command removed. Needs to be manually run
 
 - `phinx` and `phpunit` executables are in `vendor/bin`
+
+- for mysql connections `mysqli` is used.
+
+- no db migration/phinx is used. db tables are created via phpMyAdmin

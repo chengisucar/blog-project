@@ -1,40 +1,59 @@
 <?php 
 
-$servername = "db";
-$username = "php_docker";
-$password = "password";
+//connect to db
+include('app/dbconnect/conn.php');
 
-try {
-  $conn = new PDO("mysql:host=$servername;dbname=php_docker", $username, $password);
-  // set the PDO error mode to exception
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  // sql to create table
-  $sql = "CREATE TABLE MyGuests (
-    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    firstname VARCHAR(30) NOT NULL,
-    lastname VARCHAR(30) NOT NULL,
-    email VARCHAR(50),
-    reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    )";
-  
-    // use exec() because no results are returned
-    $conn->exec($sql);
-    echo "Table MyGuests created successfully";
-  } catch(PDOException $e) {
-    echo $sql . "<br>" . $e->getMessage();
-  }
-  
-  $conn = null;
+// write query for all pizzas
+$sql = 'SELECT id, name, hobbies FROM users ORDER BY created_at';
 
+// get the result set (set of rows)
+$result = mysqli_query($conn, $sql);
 
+// fetch the resulting rows as an array
+$users = mysqli_fetch_all($result, 1); //used 1 instead of MYSQLI_ASSOC. literally same thing
+
+// free the $result from memory (good practise)
+mysqli_free_result($result);
+
+// close connection
+mysqli_close($conn);
+
+// print_r($users);
 
 ?>
 
 <!DOCTYPE html>
 <html>
 	
-	<?php include('templates/header.php'); ?>
+	<?php include('app/templates/header.php'); ?>
 
-	<?php include('templates/footer.php'); ?>
+	<h4 class="center grey-text">Users</h4>
+	<div class="container ">
+		<div class="row">
+
+		<?php foreach($users as $user){ ?>
+		
+			<div class="col s6 md6">
+				<div class="card z-depth-6">
+					<div class="card-content center">
+						<h2><?php echo $user['id']; ?></h2>
+						<h4><?php echo $user['name'] ?></h4>
+						<ul>
+							<?php foreach(explode(' ', $user['hobbies']) as $hobby) :?>
+							<li><?php echo $hobby ?></li>
+							<?php endforeach ?>
+						</ul>
+					</div>
+					<div class="card-action right-align">
+						<a href="app/detailpage.php?id=<?php echo $user['id']?>" class="brand-text">more info</a>
+					</div>
+				</div>
+			</div>
+
+		<?php } ?>
+
+		</div>
+	</div>
+	<?php include('app/templates/footer.php'); ?>
 
 </html>

@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:7.4.22-apache-bullseye
 COPY ./composer.json /var/www/html
 RUN docker-php-ext-install pdo pdo_mysql && \
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
