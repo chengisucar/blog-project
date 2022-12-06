@@ -24,13 +24,14 @@ Application and its data should be ready. Check [localhost:8000](localhost:8000)
 
 ---
 
-If update for migration or seed is needed then below are the steps:
+<br/><br/>
+If an update for migration or seeding is needed then below are the steps:
 
-Initiate `phinx`. This will create `phinx.php`:
+After `composer install` initiate `phinx`. This will create `phinx.php`:
 
     vendor/bin/phinx init
 
-Set correct data in `phinx.php` and create a migration file:
+Set db connection data in `phinx.php` and create a migration file:
 
     vendor/bin/phinx create MyNewMigration
 
@@ -41,3 +42,7 @@ Fill it as in [phinx_docs](https://book.cakephp.org/phinx/0/en/migrations.html) 
 Create seed class:
 
     vendor/bin/phinx seed:create UserSeeder
+
+Fill it with test data preferably using `faker` library and run seed:
+
+    vendor/bin/phinx seed:run
