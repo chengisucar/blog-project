@@ -3,6 +3,7 @@
         "phpunit/phpunit": "^9.5"
     },
     "require": {
-        "robmorgan/phinx": "^0.13.2"
+        "robmorgan/phinx": "^0.13.2",
+        "fzaninotto/faker": "^1.9"
     }
 }
