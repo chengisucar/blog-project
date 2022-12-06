@@ -16,9 +16,17 @@ When docker build is done go into the `server` container using:
 
 And run: 
 
-    composer install
+    composer install && vendor/bin/phinx migrate -e development && vendor/bin/phinx seed:run
 
-`Phinx` and `phpunit` will be installed. Initiate `phinx`. This will create `phinx.php`:
+`Phinx` and `phpunit` and `phpfaker` will be installed.
+
+Application and its data should be ready. Check [localhost:8000](localhost:8000)
+
+---
+
+If update for migration or seed is needed then below are the steps:
+
+Initiate `phinx`. This will create `phinx.php`:
 
     vendor/bin/phinx init
 
@@ -29,3 +37,7 @@ Set correct data in `phinx.php` and create a migration file:
 Fill it as in [phinx_docs](https://book.cakephp.org/phinx/0/en/migrations.html) and migrate:
 
     vendor/bin/phinx migrate -e development
+
+Create seed class:
+
+    vendor/bin/phinx seed:create UserSeeder
