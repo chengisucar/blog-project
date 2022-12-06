@@ -8,7 +8,6 @@ Start application with:
 
     docker-compose up -d
 
-`mysqli` and `mysql_pdo` install commands are in Dockerfile. They will be installed. 
     
 When docker build is done go into the `server` container using:
 
