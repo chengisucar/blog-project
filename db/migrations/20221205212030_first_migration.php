@@ -22,7 +22,7 @@ final class FirstMigration extends AbstractMigration
         $table = $this->table('users');
         $table->addColumn('name', 'string')
               ->addColumn('hobbies', 'string')
-              ->addColumn('created_at', 'timestamp')
+              ->addColumn('created_at', 'timestamp', ['default'=> 'CURRENT_TIMESTAMP'])
               ->create();
     }
 }
