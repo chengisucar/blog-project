@@ -6,24 +6,24 @@ A basic web application using `php`, `mysql` and `docker-compose`
 
 Start application with: 
 
-    docker-compose up -d
+    make build
 
-    
-When docker build is done go into the `server` container using:
+After build it will go into server container. Simply run:
 
-    docker exec -it containerName /bin/sh
+    make
 
-And run: 
-
-    composer install && vendor/bin/phinx migrate -e development && vendor/bin/phinx seed:run
-
-`Phinx` and `phpunit` and `phpfaker` will be installed.
+This will install `Phinx` and `phpunit` and `phpfaker`.
 
 Application and its data should be ready. Check [localhost:8000](localhost:8000)
 
+If you want to skip __migration__ or __data seed__ steps, then check `Makefile` and run the relevant steps or commands.
+<br/><br/>
+
 ---
 
-<br/><br/>
+<br/>
+
+## Notes
 If an update for migration or seeding is needed then below are the steps:
 
 After `composer install` initiate `phinx`. This will create `phinx.php`:
