@@ -12,11 +12,11 @@ After build it will go into server container. Simply run:
 
     make
 
-This will install `Phinx` and `phpunit` and `phpfaker`.
+This will install `Phinx`,`phpunit`, `phpfaker` and execute `migration` and `seed`.
 
-Application and its data should be ready. Check [localhost:8000](localhost:8000)
+Then application and its data should be ready. Check [localhost:8000](localhost:8000)
 
-If you want to skip __migration__ or __data seed__ steps, then check `Makefile` and run the relevant steps or commands.
+If you want to skip __migration__ or __data seed__ steps, then first check `Makefile` and run the relevant steps or commands.
 <br/><br/>
 
 ---
