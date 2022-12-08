@@ -4,17 +4,16 @@ A basic web application using `php`, `mysql` and `docker-compose`
 
 ---
 
-Start application with: 
+Build environment with: 
 
-    make build
+    make 
 
-After build it will go into server container. Simply run:
+These will install `Phinx`,`phpunit`, `phpfaker` and execute `migration` and `seed`.
 
-    make
+Then application and its data should be ready
+-  [localhost](http://localhost/)
+-  [phpmyadmin](http://localhost:8080/)
 
-This will install `Phinx`,`phpunit`, `phpfaker` and execute `migration` and `seed`.
-
-Then application and its data should be ready. Check [localhost:8000](localhost:8000)
 
 If you want to skip __migration__ or __data seed__ steps, then first check `Makefile` and run the relevant steps or commands.
 <br/><br/>
