@@ -1,14 +1,19 @@
-all: composer migrate seed
+all: build composer migrate seed
 
 build:
+	@echo "Running containers..."
 	@docker-compose up -d
-	@docker exec -it blog-project-www-1 /bin/sh
 
 composer:
-	@composer install
+	@echo "Installing composer..."
+	@docker-compose exec -it www composer install
 
 migrate:
-	@vendor/bin/phinx migrate -e development
+	@echo "Migration in proggress..."
+	@docker-compose exec -it www vendor/bin/phinx migrate -e development
 
 seed:
-	@vendor/bin/phinx seed:run
+	@echo "Seeding test data..."
+	@docker-compose exec -it www vendor/bin/phinx seed:run
+	@echo "\n\n\n===================>>>>>>>>>> App:   http://localhost  <<<<<<<<<=============="
+	@echo "\n=============>>>>>>>>>> PhpMyAdmin:   http://localhost  <<<<<<<<<==============\n\n\n"
