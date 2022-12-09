@@ -1,4 +1,4 @@
-FROM php:7.4.22-apache-bullseye
+FROM php:apache
 COPY ./composer.json /var/www/html
 RUN docker-php-ext-install pdo pdo_mysql && \
     docker-php-ext-install mysqli && \
