@@ -2,6 +2,8 @@
 
 namespace App\Foundation;
 
+use Exception;
+
 class ViewRenderer
 {
     public function __construct(private string $path)
@@ -9,9 +11,14 @@ class ViewRenderer
         
     }
 
-    public function render(string $templateName): string
+    public function render(string $templateName, array $attributes): string
     {
-        // use ob_start();
-        return '<p>sample-data</p>';
+        ob_start();
+
+        include $this->path . $templateName . '.php';
+
+        $renderedContent = ob_get_clean();
+
+        return $renderedContent;
     }
 }

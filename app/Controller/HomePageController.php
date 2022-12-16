@@ -4,8 +4,10 @@ namespace App\Controller;
 
 class HomePageController
 {
-    public function __construct(private ViewRenderer $viewRenderer)
-    {
+    public function __construct(
+        private Database $database,
+        private ViewRenderer $viewRenderer
+    ) {
     }
 
     public function execute(Request $request): string

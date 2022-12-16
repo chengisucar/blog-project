@@ -7,13 +7,31 @@ use PHPUnit\Framework\TestCase;
 
 final class ViewRendererTest extends TestCase
 {
-    public function testShouldRenderGivenTemplate()
+    /**
+     * @dataProvider provideRenderTemplate
+     */
+    public function testShouldRenderGivenTemplate($template, $expectedRenderedContent)
     {
-        $viewRenderer = new ViewRenderer('test');
+        $viewRenderer = new ViewRenderer(__DIR__ . '/fixtures/templates/');
 
-        $renderedData = $viewRenderer->render('template');
-        $expected = '<p>sample-data</p>';
+        $renderedContent = $viewRenderer->render($template, [
+            'title' => 'asdfasdfasf',
+        ]);
 
-        $this->assertEquals($expected, $renderedData);
+        $this->assertEquals($expectedRenderedContent, $renderedContent);
     }
+
+    public function provideRenderTemplate(): array
+    {
+        return [
+            [
+                'template' => 'empty',
+                'expectedRenderedContent' => '',
+            ],
+            [
+                'template' => 'not-empty',
+                'expectedRenderedContent' => '<p>sample-data</p>',
+            ]
+        ];
+    }    
 }
