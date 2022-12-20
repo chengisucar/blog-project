@@ -1,59 +1,33 @@
 <?php 
 
-//connect to db
-include('app/dbconnect/conn.php');
+require __DIR__ . '/vendor/autoload.php';
 
-// write query for all pizzas
-$sql = 'SELECT id, name, hobbies FROM users ORDER BY created_at';
+use App\Controller\HomePageController;
+use App\Foundation\Request;
+use App\Foundation\Database;
+use App\Foundation\ViewRenderer;
 
-// get the result set (set of rows)
-$result = mysqli_query($conn, $sql);
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
 
-// fetch the resulting rows as an array
-$users = mysqli_fetch_all($result, 1); //used 1 instead of MYSQLI_ASSOC. literally same thing
+// configurations
+const DSN = 'mysql:host=db;dbname=php_db'; // todo: load them from env
+const USERNAME = 'php_user';
+const PASSWORD = 'password';
+const TEMPLATES_PATH = __DIR__ . '/templates/';
 
-// free the $result from memory (good practise)
-mysqli_free_result($result);
+// wiring instantiate dependencies
+$database = new Database(DSN, USERNAME, PASSWORD);
+$viewRenderer = new ViewRenderer(TEMPLATES_PATH);
+$request = new Request($_GET, $_POST);
 
-// close connection
-mysqli_close($conn);
+$homePageController = new HomePageController($database, $viewRenderer);
 
-// print_r($users);
+echo $homePageController->execute($request);
 
-?>
 
-<!DOCTYPE html>
-<html>
-	
-	<?php include('app/templates/header.php'); ?>
-
-	<h4 class="center grey-text">Users</h4>
-	<div class="container ">
-		<div class="row">
-
-		<?php foreach($users as $user){ ?>
-		
-			<div class="col s6 md6">
-				<div class="card z-depth-6">
-					<div class="card-content center">
-						<h2><?php echo $user['id']; ?></h2>
-						<h4><?php echo $user['name'] ?></h4>
-						<ul>
-							<?php foreach(explode(' ', $user['hobbies']) as $hobby) :?>
-							<li><?php echo $hobby ?></li>
-							<?php endforeach ?>
-						</ul>
-					</div>
-					<div class="card-action right-align">
-						<a href="app/detailpage.php?id=<?php echo $user['id']?>" class="brand-text">more info</a>
-					</div>
-				</div>
-			</div>
-
-		<?php } ?>
-
-		</div>
-	</div>
-	<?php include('app/templates/footer.php'); ?>
-
-</html>
+// TODO:
+// 0- refactor the whole code to use new pattern.
+// 1- load configurations from env
+// 2- add routing to be able to have controllers per path (url)
+// 3- write better tests for Database class

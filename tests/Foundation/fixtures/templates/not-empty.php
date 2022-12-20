@@ -1,1 +1,1 @@
-<p>sample-data</p>
+<p><?= $title ?></p>

@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Foundation\Database;
+use App\Foundation\Request;
+use App\Foundation\ViewRenderer;
+
 class HomePageController
 {
     public function __construct(
@@ -12,8 +16,14 @@ class HomePageController
 
     public function execute(Request $request): string
     {
-        return $this->viewRenderer->renders('homepage', [
-            'title' => 'Home Page'
+        $users = $this
+            ->database
+            ->query('SELECT id, name, hobbies FROM users ORDER BY created_at')
+            ->fetchAll()
+        ;
+
+        return $this->viewRenderer->render('homepage', [
+            'users' => $users
         ]);
     }
 }

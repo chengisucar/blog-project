@@ -11,14 +11,16 @@ class ViewRenderer
         
     }
 
-    public function render(string $templateName, array $attributes): string
+    public function render(string $templateName, array $attributes = []): string
     {
         ob_start();
 
+        if (count($attributes) !== 0) {
+            extract($attributes);
+        }
+
         include $this->path . $templateName . '.php';
 
-        $renderedContent = ob_get_clean();
-
-        return $renderedContent;
+        return ob_get_clean();
     }
 }
