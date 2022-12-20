@@ -1,5 +1,6 @@
 FROM php:apache
 COPY ./composer.json /var/www/html
+RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql && \
     docker-php-ext-install mysqli && \
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
@@ -12,5 +13,3 @@ RUN docker-php-ext-install pdo pdo_mysql && \
     git \
     unzip \
     vim
-
-
