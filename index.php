@@ -23,8 +23,16 @@ $request = new Request($_GET, $_POST);
 
 $homePageController = new HomePageController($database, $viewRenderer);
 
-echo $homePageController->execute($request);
+// the idea of router => Router::get('/', HomePageController::class, 'execute');
 
+$route = $_SERVER['REQUEST_URI'] ?? '/';
+$method = $_SERVER['REQUEST_METHOD'] ?? 'GET'; // GET, POST
+
+if ($route === '/' && $method === 'GET') {
+    echo $homePageController->execute($request);
+} else {
+    echo "page not found";
+}
 
 // TODO:
 // 0- refactor the whole code to use new pattern.
