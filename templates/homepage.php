@@ -22,7 +22,7 @@
 
         <nav class="white z-depth-0">
             <div class="container">
-                <a href="/index.php" class="brand-logo brand-text">Blog Project</a>
+                <a href="/" class="brand-logo brand-text">Blog Project</a>
                 <ul id="nav-mobile" class="right hide-on-small-and-down">
                     <li><a href="/app/add.php" class="btn brand z-depth-0">Add an Article</a></li>
                 </ul>
@@ -47,7 +47,7 @@
                                 </ul>
                             </div>
                             <div class="card-action right-align">
-                                <a href="app/detailpage.php?id=<?= $user['id']?>" class="brand-text">more info</a>
+                                <a href="app/detailpage.php" class="brand-text">more info</a>
                             </div>
                         </div>
                     </div>
