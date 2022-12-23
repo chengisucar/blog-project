@@ -1,38 +1,77 @@
-<?php 
+<?php
 
 require __DIR__ . '/vendor/autoload.php';
 
 use App\Controller\HomePageController;
 use App\Foundation\Request;
-use App\Foundation\Database;
 use App\Foundation\ViewRenderer;
 
+// debug settings
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
-// configurations
-const DSN = 'mysql:host=db;dbname=php_db'; // todo: load them from env
-const USERNAME = 'php_user';
-const PASSWORD = 'password';
+// conf loading
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__, 'config');
+$dotenv->load();
 const TEMPLATES_PATH = __DIR__ . '/templates/';
 
-// wiring instantiate dependencies
-$database = new Database(DSN, USERNAME, PASSWORD);
-$viewRenderer = new ViewRenderer(TEMPLATES_PATH);
-$request = new Request($_GET, $_POST);
+// Routing
+$routes = [];
 
-$homePageController = new HomePageController($database, $viewRenderer);
-
-// the idea of router => Router::get('/', HomePageController::class, 'execute');
-
-$route = $_SERVER['REQUEST_URI'] ?? '/';
-$method = $_SERVER['REQUEST_METHOD'] ?? 'GET'; // GET, POST
-
-if ($route === '/' && $method === 'GET') {
+route('/', function () {
+    $request = new Request($_GET, $_POST);
+    $viewRenderer = new ViewRenderer(TEMPLATES_PATH);
+    $homePageController = new HomePageController($viewRenderer);
     echo $homePageController->execute($request);
-} else {
-    echo "page not found";
+});
+
+route('/app/detailpage.php', function () {
+    echo "Detailpage";
+});
+
+route('/app/add.php', function () {
+    echo "Add User Page";
+});
+
+route('/404', function () {
+    echo "Page not found";
+});
+
+function route(string $path, callable $callback) {
+    global $routes;
+    $routes[$path] = $callback;
 }
+
+run();
+
+function run() {
+    global $routes;
+//    $uri = $_SERVER['REQUEST_URI'];
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $found = false;
+    foreach ($routes as $path => $callback) {
+        if ($path !== $uri) continue;
+
+        $found = true;
+        $callback();
+    }
+
+    if (!$found) {
+        $notFoundCallback = $routes['/404'];
+        $notFoundCallback();
+    }
+}
+
+//if ($route === '/' && $method === 'GET') {
+//    echo $homePageController->execute($request);
+//    echo var_dump($_ENV);
+//
+//} elseif ($route === '/detailpage' && $method === 'GET') {
+//    echo "sds";
+//}
+//else {
+//    echo "page not found";
+//}
 
 // TODO:
 // 0- refactor the whole code to use new pattern.
