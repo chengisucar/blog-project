@@ -33,26 +33,9 @@
         <div class="container ">
             <div class="row">
 
-                <?php foreach($users as $user): ?>
-
-                    <div class="col s6 md6">
-                        <div class="card z-depth-6">
-                            <div class="card-content center">
-                                <h2><?= $user['id']; ?></h2>
-                                <h4><?= $user['name'] ?></h4>
-                                <ul>
-                                    <?php foreach(explode(' ', $user['hobbies']) as $hobby) :?>
-                                        <li><?php echo $hobby ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            </div>
-                            <div class="card-action right-align">
-                                <a href="app/detailpage.php?id=<?= $user['id'] ?>" class="brand-text">more info</a>
-                            </div>
-                        </div>
-                    </div>
-
-                <?php endforeach; ?>
+                <div class="col-12">
+                    404 page<?= isset($message) ? ', ' . $message : '' ?>
+                </div>
 
             </div>
         </div>

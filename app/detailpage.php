@@ -50,12 +50,12 @@ if(isset($_GET['id'])){
 
 <h3 class="blue-text center">USER DETAILS</h3>
 <div class="container left-align">
-    <?php if($details): ?>
+    <?php if ($details): ?>
         <h2><?php echo htmlspecialchars($details['id']) ?></h2>
         <p>Name: <?php echo htmlspecialchars($details['name'])?></p>
         <p>Creation Date: <?php echo htmlspecialchars($details['created_at'])?></p>
         <ul>Hobbies: 
-            <?php foreach(explode(' ', $details['hobbies']) as $detail) :?>
+            <?php foreach (explode(' ', $details['hobbies']) as $detail) :?>
             <li><?php echo $detail ?></li>
             <?php endforeach ?>
         </ul>
