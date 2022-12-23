@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Foundation;
 
 use App\Foundation\Request;
-use LDAP\Result;
 use PHPUnit\Framework\TestCase;
 
 final class RequestTest extends TestCase
