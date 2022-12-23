@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
-use App\Foundation\Database;
+use App\dbconnect\DbConnect;
 use App\Foundation\Request;
 use App\Foundation\ViewRenderer;
+use PDO;
 
 class HomePageController
 {
-    public function __construct(
-        private Database $database,
-        private ViewRenderer $viewRenderer
-    ) {
+    private PDO $database;
+    public function __construct(private ViewRenderer $viewRenderer)
+    {
+        $this->database = (new DbConnect())->createConnection();
     }
 
     public function execute(Request $request): string
