@@ -12,7 +12,7 @@ final class RequestTest extends TestCase
     /** @dataProvider provideGetData */
     public function testGetShouldReturnValue($get, $post, $key, $expected)
     {
-        $request = new Request($get, $post);
+        $request = new Request($get, $post, 'GET', '/');
 
         $this->assertEquals($expected, $request->get($key));
     }
@@ -20,9 +20,57 @@ final class RequestTest extends TestCase
     /** @dataProvider providePostData */
     public function testPostShouldReturnValue($get, $post, $key, $expected)
     {
-        $request = new Request($get, $post);
+        $request = new Request($get, $post, 'GET', '/');
 
         $this->assertEquals($expected, $request->post($key));
+    }
+
+    /** @dataProvider provideMethodData */
+    public function testMethodShouldReturnValue($method, $expected)
+    {
+        $request = new Request([], [], $method, '/');
+
+        $this->assertEquals($expected, $request->method());
+    }
+
+    /** @dataProvider provideURIData */
+    public function testPathShouldReturnValue($uri, $expected)
+    {
+        $request = new Request([], [], 'GET', $uri);
+
+        $this->assertEquals($expected, $request->path());
+    }
+
+    public function provideURIData()
+    {
+        return [
+            [
+                'uri' => 'http://google.com/path/to/resource?get=something',
+                'expected' => '/path/to/resource',
+            ],
+            [
+                'uri' => 'http://billie.io/path/to/resource/',
+                'expected' => '/path/to/resource/',
+            ],
+            [
+                'uri' => 'http://localhost',
+                'expected' => '/',
+            ],
+        ];
+    }
+
+    public function provideMethodData()
+    {
+        return [
+            [
+                'method' => 'GET',
+                'expected' => 'GET',
+            ],
+            [
+                'method' => 'POST',
+                'expected' => 'POST',
+            ]
+            ];
     }
 
     public function provideGetData(): array
@@ -85,3 +133,5 @@ final class RequestTest extends TestCase
         ];
     }    
 }
+
+// $request->path() google.com/path/to/something?query=asdaf --> path/to/something
