@@ -2,18 +2,15 @@
 
 namespace App\Controller;
 
-use App\dbconnect\DbConnect;
 use App\Foundation\Request;
 use App\Foundation\ViewRenderer;
+use PDOException;
 use PDO;
 
 class DetailPageController
 {
-    private PDO $database;
-
-    public function __construct(private ViewRenderer $viewRenderer)
+    public function __construct(private ViewRenderer $viewRenderer, private PDO $pdo)
     {
-        $this->database = (new DbConnect())->createConnection(); // todo: refacor
     }
 
     public function execute(Request $request): string
@@ -22,12 +19,11 @@ class DetailPageController
 
         $details = $this->getUserDetails($id);
 
-        if ($details === null) { // todo: refactor
+        if ($details === null) {
             return $this->viewRenderer->render('404', [
-                'message' => sprintf('user with %s id is not applicabble', $id)
+                'message' => sprintf($_ENV['USER_ID_INVALID'], $id)
             ]);
         }
-
         return $this->viewRenderer->render('detailpage', [
             'id' => $id,
             'details' => $details,
@@ -38,10 +34,30 @@ class DetailPageController
     {
         $query = 'SELECT `id`, `name`, `hobbies`, `created_at` FROM users WHERE `id` = ?';
 
-        $stmt = $this->database->prepare($query);
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute([$id]);
-        $result = $stmt->fetch();
+        $result = $stmt->fetch(PDO::FETCH_BOTH);
 
         return is_array($result) ? $result : null;
+    }
+
+    public function deleteUser(Request $request): string
+    {
+        $id = (int) $request->post('id_to_delete');
+
+        $details = $this->getUserDetails($id);
+
+        try {
+            $stmt = $this->pdo->prepare('DELETE FROM users WHERE id=:id');
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            $message = sprintf($_ENV['USER_DELETED'], $id);
+            return $this->viewRenderer->render('deleteResult', ['details' => $details,
+                "successMessage"=> $message]);
+        } catch (PDOException $e) {
+            $message = sprintf($_ENV['USER_NOT_DELETED'], $id);
+            return $this->viewRenderer->render('deleteResult', ['exceptionMessage' => $e->getMessage(),
+                'errorMessage'=> $message, 'details' => $details]);
+        }
     }
 }
