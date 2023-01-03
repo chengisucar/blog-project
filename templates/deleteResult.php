@@ -16,10 +16,16 @@
                 margin: 20px auto;
                 padding: 20px;
             }
+            pre {
+                margin-top: 10px;
+                margin-right: 30px;
+                margin-bottom: 10px;
+                margin-left: 50px;
+            }
         </style>
     </head>
-    <body class="grey lighten-4">
 
+    <body class="grey lighten-4">
         <nav class="white z-depth-0">
             <div class="container">
                 <a href="/" class="brand-logo brand-text">Blog Project</a>
@@ -28,21 +34,9 @@
                 </ul>
             </div>
         </nav>
-
-        <h4 class="center grey-text">404 NOT FOUND</h4>
-        <div class="container ">
-            <div class="row">
-
-                <div class="col-12">
-                    <?= isset($message) ? $message : '' ?>
-                </div>
-
-            </div>
-        </div>
-
+        <pre><?= empty($exceptionMessage) ? "<br>{$successMessage}" : "{$errorMessage}<br>{$exceptionMessage}" ?></pre>
         <footer class="section">
-            <div class="center grey-text">&copy; Copyright 2022 Blog Project</div>
+                <div class="center grey-text">&copy; Copyright 2022 Blog Project</div>
         </footer>
-
     </body>
 </html>

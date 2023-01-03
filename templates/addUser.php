@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+    <html>
+
     <head>
         <title>Blog Project</title>
         <!-- Compiled and minified CSS -->
@@ -18,8 +19,8 @@
             }
         </style>
     </head>
-    <body class="grey lighten-4">
 
+    <body class="grey lighten-4">
         <nav class="white z-depth-0">
             <div class="container">
                 <a href="/" class="brand-logo brand-text">Blog Project</a>
@@ -29,30 +30,28 @@
             </div>
         </nav>
 
-        <h4 class="center grey-text">USER DETAILS</h4>
-        <div class="container left-align">
-            <?php if($details): ?>
-                <h2><?= htmlspecialchars($details['id']) ?></h2>
-                <p>Name: <?= htmlspecialchars($details['name'])?></p>
-                <p>Creation Date: <?= htmlspecialchars($details['created_at'])?></p>
-                <ul>Hobbies:
-                    <?php foreach(explode(' ', $details['hobbies']) as $detail) :?>
-                        <li><?= $detail ?></li>
-                    <?php endforeach ?>
-                </ul>
-                <form action="/app/detailpage.php" method="POST">
-                    <input type="hidden" name="id_to_delete" value="<?= $details['id']?>">
-                    <input type="submit" name="delete" value="DELETE" class="btn red z-depth-0">
-                </form>
-
-            <?php else : ?>
-                <h4>No such record!</h4>
-            <?php endif ?>
-        </div>
+        <section class="container grey-text">
+            <h4 class="center">Add User Data</h4>
+            <form class="white" action="add.php" method="POST">
+                <label>Name</label>
+                <input type="text" name="name" value='<?php echo $values['name']; ?>'>
+                <div class="red-text"><?php echo $errors['name'] ?></div>
+                <label>Email</label>
+                <input type="text" name="email"value='<?php echo $values['email']; ?>'>
+                <div class="red-text"><?php echo $errors['email']; ?></div>
+                <label>Hobbies</label>
+                <input type="text" name="hobbies" value='<?php echo $values['hobbies']; ?>'>
+                <div class="red-text"><?php echo $errors['hobbies']; ?></div>
+                <div class="center">
+                    <input type="submit" name="submit" value="Submit" class="btn brand z-depth-0">
+                </div>
+            </form>
+        </section>
 
         <footer class="section">
             <div class="center grey-text">&copy; Copyright 2022 Blog Project</div>
         </footer>
 
     </body>
-</html>
+
+    </html>

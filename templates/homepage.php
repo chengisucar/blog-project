@@ -24,7 +24,7 @@
             <div class="container">
                 <a href="/" class="brand-logo brand-text">Blog Project</a>
                 <ul id="nav-mobile" class="right hide-on-small-and-down">
-                    <li><a href="/app/add.php" class="btn brand z-depth-0">Add an Article</a></li>
+                    <li><a href="/app/add.php" class="btn brand z-depth-0">Add User</a></li>
                 </ul>
             </div>
         </nav>
