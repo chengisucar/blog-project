@@ -17,6 +17,17 @@ class Router
         array_push($this->routes, $route);
     }
 
+    public function post(string $path, callable $callback)
+    {
+        $route = [
+            'method' => 'POST',
+            'path' => $path,
+            'callback' => $callback,
+        ];
+
+        array_push($this->routes, $route);
+    }
+
     public function dispatch(Request $request)
     {
         $method = $request->method();
